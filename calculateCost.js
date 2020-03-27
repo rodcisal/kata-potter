@@ -17,13 +17,14 @@ function calculateCost(books) {
 
     if (book !== prevBook) {
       currentBasket = 0;
-      if (
-        baskets[currentBasket]
-        && baskets[currentBasket + 1]
-        && baskets[currentBasket].length === baskets[currentBasket + 1].length + 1
-      ) {
-        currentBasket += 1;
+      if (baskets[currentBasket] && baskets[currentBasket].length === 4) {
+        baskets.forEach((basket, bidx) => {
+          if (basket.length === 3) {
+            currentBasket = bidx;
+          }
+        });
       }
+
       if (baskets[currentBasket]) {
         baskets[currentBasket].push(book);
       } else {
@@ -44,7 +45,7 @@ function calculateCost(books) {
     finalCost += (8 * setLen * (1 - discountPerUnits[setLen]));
   });
 
-  return finalCost;
+  return +finalCost.toFixed(2);
 }
 
 export default calculateCost;
