@@ -76,5 +76,17 @@ describe('calculateBasketCost', () => {
       const cost = calculateCost([1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5]);
       expect(cost).toBe(100);
     });
+
+    it('8 total, two of the first three plus one of each of the rest', () => {
+      const cost = calculateCost([1, 1, 2, 2, 3, 3, 4, 5]);
+      expect(cost).toBe(51.2);
+    });
+
+    it('23 books two of first, two of second, two of third, one of third, one of fourth', () => {
+      const cost = calculateCost(
+        [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4],
+      );
+      expect(cost).toBe(141.2);
+    });
   });
 });

@@ -17,20 +17,32 @@ function calculateCost(books) {
 
     if (book !== prevBook) {
       currentBasket = 0;
-      if (baskets[currentBasket] && baskets[currentBasket].length === 4) {
-        baskets.forEach((basket, bidx) => {
-          if (basket.length === 3) {
-            currentBasket = bidx;
-          }
-        });
-      }
-
       if (baskets[currentBasket]) {
         baskets[currentBasket].push(book);
       } else {
         baskets[currentBasket] = [book];
       }
     }
+  });
+
+  // redistribute baskets to max out the discount to baskets
+  // with three or more books
+  baskets.forEach((basket, idx) => {
+    baskets.forEach((ibasket, bidx) => {
+      if (
+        baskets[bidx]
+        && baskets[bidx].length > 2
+        && basket.length === (baskets[bidx].length + 2)) {
+        for (let i = 0; i < basket.length; i += 1) {
+          const book = basket[i];
+          if (!baskets[bidx].includes(book)) {
+            baskets[bidx].push(book);
+            baskets[idx] = basket.filter((b) => b !== book);
+            break;
+          }
+        }
+      }
+    });
   });
 
   baskets.forEach((set) => {
